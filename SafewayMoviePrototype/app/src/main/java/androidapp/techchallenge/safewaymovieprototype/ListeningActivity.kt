@@ -69,10 +69,6 @@ class ListeningActivity : Activity(), RecognitionListener {
     private var recognizer: SpeechRecognizer? = null
     private var captions: HashMap<String, Int>? = null
 
-    private var voiceInput: TextView? = null
-    private var speakButton: TextView? = null
-    // private var alarmButton: Button = Button
-    private val REQ_CODE_SPEECH_INPUT = 100
 //    lateinit var mTTS: TextToSpeech
     lateinit var sms: SmsManager
     //    lateinit var broadcastReceiver: BroadcastReceiver
@@ -208,10 +204,10 @@ class ListeningActivity : Activity(), RecognitionListener {
             longitude = location.getLongitude();
             latitude = location.getLatitude();
         }
-        sms.sendTextMessage("+4741228397", null, "Location: Longitude: " + latitude.toString() + " Latitude: " + longitude.toString(), null,null)
-        //491775062060
+        sms.sendTextMessage("+491775062060", null, "Location: Longitude: " + latitude.toString() + " Latitude: " + longitude.toString(), null,null)
 
-        var number = "+4741228397"
+
+        var number = "+491775062060"
         val callIntent = Intent(Intent.ACTION_CALL)
         callIntent.setData(Uri.parse("tel:" + number))
 
@@ -271,23 +267,17 @@ class ListeningActivity : Activity(), RecognitionListener {
         }
     }
 
-    /**
-     * In partial result we get quick updates about current hypothesis. In
-     * keyword spotting mode we can react here, in other modes we need to wait
-     * for final result in onResult.
-     */
+
     override fun onPartialResult(hypothesis: Hypothesis?) {
         if (hypothesis == null)
             return
 
         val text = hypothesis.hypstr
         if (text == KEYPHRASE) {
-            Log.d("test", "It works!")
+//            Log.d("test", "It works!")
             recognizer!!.stop()
 
-// copied stuff
-//            mTTS.speak("Calling the police", TextToSpeech.QUEUE_FLUSH, null, "calling")
-            var number = "+4741228397"
+            var number = "+491775062060"
             val callIntent = Intent(Intent.ACTION_CALL)
             callIntent.setData(Uri.parse("tel:" + number))
 
@@ -322,30 +312,15 @@ class ListeningActivity : Activity(), RecognitionListener {
             }
 
 
-            sms.sendTextMessage("+4741228397", null, "Location: Longitude: " + latitude.toString() + " Latitude: " + longitude.toString(), null,null)
-            //491775062060
+            sms.sendTextMessage("+491775062060", null, "Location: Longitude: " + latitude.toString() + " Latitude: " + longitude.toString(), null,null)
 
-
-            //   callIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_USER_ACTION
-            //         val call = Intent(Intent.ACTION_DIAL)
-            //        call.setData(Uri.parse("tel:" + number))
-            //        startActivity(call)
             startActivity(callIntent)
-
-
-
-
-//            recognizer!!.startListening(KEYPHRASE)
-
-
-
 
 
         } else
             (findViewById(R.id.caption_text) as TextView).text = text
     }
-
-    /**
+        /**
      * This callback is called when we stop the recognizer.
      */
     override fun onResult(hypothesis: Hypothesis?) {
